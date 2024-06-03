@@ -3,9 +3,9 @@ module "github_settings" {
   owner                  = var.owner
   repository             = var.repository
   branch                 = var.branch
-  force_push_bypassers   = ["${var.owner}/soleng-admin"]
-  dismissal_restrictions = ["${var.owner}/soleng-admin", "${var.owner}/soleng-reviewers"]
-  pull_request_bypassers = ["${var.owner}/soleng-admin"]
+  force_push_bypassers   = ["${var.owner}/admin"]
+  dismissal_restrictions = ["${var.owner}/admin", "${var.owner}/reviewers"]
+  pull_request_bypassers = ["${var.owner}/admin"]
 }
 
 module "github_workflow_files" {

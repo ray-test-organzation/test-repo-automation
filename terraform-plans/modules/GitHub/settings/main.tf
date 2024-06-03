@@ -31,15 +31,15 @@ resource "github_repository" "repo" {
 }
 
 data "github_team" "admins" {
-  slug = "soleng-admin"
+  slug = "admin"
 }
 
 data "github_team" "reviewers" {
-  slug = "soleng-reviewers"
+  slug = "reviewers"
 }
 
 data "github_team" "engineering" {
-  slug = "solutions-engineering"
+  slug = "engineering"
 }
 
 resource "github_repository_collaborators" "repo_collaborators" {
