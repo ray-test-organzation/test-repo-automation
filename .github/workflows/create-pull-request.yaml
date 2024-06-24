@@ -36,7 +36,7 @@ jobs:
       - name: Checkout target repository
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: test-branch-1
           repository: ray-test-organzation/${{ env.TARGET_REPO_PATH }}  # not the automation repo
       - name: Download changes to current repository
         uses: actions/download-artifact@v4
