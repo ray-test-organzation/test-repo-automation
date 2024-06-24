@@ -57,6 +57,7 @@ jobs:
           commit-message: Test commit message
           branch-name: new-branch
           title: Test pull request
+          base: test-stable-branch-1
           body: Test pull request body
           upsert: true
           repository: "ray-test-organzation/${{ env.TARGET_REPO_PATH }}"
