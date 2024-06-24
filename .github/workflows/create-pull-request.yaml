@@ -36,7 +36,7 @@ jobs:
       - name: Checkout target repository
         uses: actions/checkout@v4
         with:
-          ref: test-branch-1
+          ref: test-stable-branch-1
           fetch-depth: 0
           repository: ray-test-organzation/${{ env.TARGET_REPO_PATH }}  # not the automation repo
       - name: Download changes to current repository
@@ -52,11 +52,11 @@ jobs:
           owner: ray-test-organzation
           repositories: "${{ env.TARGET_REPO_PATH }}"
       - name: Create pull request
-        uses: chanchiwai-ray/create-pull-request@feat/#213
+        uses: canonical/create-pull-request@main
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           commit-message: Test commit message
-          branch-name: new-branch
+          branch-name: test-release-branch-1
           title: Test pull request
           base: test-stable-branch-1
           body: Test pull request body
