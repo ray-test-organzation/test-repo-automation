@@ -10,7 +10,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      actions: read
       contents: write
     steps:
       - name: Get Latest Run
@@ -39,6 +38,7 @@ jobs:
         uses: actions/download-artifact@v6.0.0
         with:
           pattern: build-{{ steps.read_version.outputs.build_version }}-*
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ steps.get_latest_run.outputs.id }}
 
       - name: Create release
