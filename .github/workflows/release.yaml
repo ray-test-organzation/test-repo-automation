@@ -22,3 +22,11 @@ jobs:
       - name: Use artifact
         run: cat ./artifact/build.txt
 
+      - name: Create release
+        uses: softprops/action-gh-release@v2.5.0
+        with:
+          name: Test release
+          tag_name: release-${{ github.event.workflow_run.id }}
+          body: |
+            This is a test release created from the Deploy workflow.
+          files: ./artifact/build.txt
