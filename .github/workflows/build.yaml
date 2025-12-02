@@ -17,16 +17,10 @@ jobs:
       - name: Read build version
         id: read_version
         run: |
-          BUILD_VERSION=$(cat build.txt)
-          echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+          echo "$(cat build.txt)" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
         uses: actions/upload-artifact@v5.0.0
         with:
           name: build-${{ steps.read_version.outputs.build_version }}-x86_64-linux
           path: build.txt
-
-      - name: Download artifact from Build workflow
-        uses: actions/download-artifact@v6.0.0
-        with:
-          pattern: build-${{ steps.read_version.outputs.build_version }}-*
