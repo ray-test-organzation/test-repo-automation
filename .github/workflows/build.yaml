@@ -9,11 +9,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6.0.0
+
+      - name: Read build version
+        id: read_version
+        run: |
+          echo "$(cat build.txt)" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: build-artifact
+          name: build-${{ steps.read_version.outputs.build_version }}-x86_64-linux
           path: build.txt
