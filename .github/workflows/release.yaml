@@ -18,7 +18,11 @@ jobs:
         uses: canonical/operator-workflows/internal/get-plan@main
         id: get-plan
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: ${{ inputs.working-directory }}
           workflow-file: ".github/workflows/build.yaml"
+          workflow-run-id: ${{ inputs.workflow-run-id }}
+          identifier: ""
 
       - uses: actions/checkout@v6.0.0
 
