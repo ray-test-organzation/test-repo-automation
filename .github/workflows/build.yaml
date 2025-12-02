@@ -17,14 +17,3 @@ jobs:
         with:
           name: build-artifact
           path: build.txt
-
-      - name: Get Latest Run
-        uses: actions/github-script@v8.0.0
-        with:
-          script: |
-            const { data: runs } = await github.rest.actions.listWorkflowRuns({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: "build.yaml",
-            });
-            console.log(runs.workflow_runs[0]);

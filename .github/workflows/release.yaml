@@ -15,22 +15,22 @@ jobs:
     outputs:
       build_version: ${{ steps.version.build_version }}
     steps:
-      - name: Get plan
-        uses: canonical/operator-workflows/internal/get-plan@main
-        id: get-plan
+      - name: Get Latest Run
+        id: get_latest_run
+        uses: actions/github-script@v8.0.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: "./"
-          workflow-file: ".github/workflows/build.yaml"
-          workflow-run-id: ""
-          identifier: "build_artifact"
+          script: |
+            const { data: runs } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "build.yaml",
+            });
+            if (runs.total_count === 0) {
+              throw new Error("No workflow runs found for build.yaml");
+            }
+            core.setOutput('id', runs.workflow_runs[0].id);
 
       - uses: actions/checkout@v6.0.0
-
-      - name: Debug
-        run: |
-          echo "entire event: ${{ toJson(github.event) }}"
-          echo "Workflow Run: ${{ github.event.workflow_run }}"
 
       - name: Download artifact from Build workflow
         uses: actions/download-artifact@v6.0.0
@@ -38,7 +38,7 @@ jobs:
           name: build-artifact
           path: ./artifact
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+          run-id: ${{ steps.outputs.get_latest_run.id }}
 
       - name: Use artifact
         id: version
