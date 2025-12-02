@@ -23,7 +23,7 @@ jobs:
           working-directory: "./"
           workflow-file: ".github/workflows/build.yaml"
           workflow-run-id: ""
-          identifier: ""
+          identifier: "build_artifact"
 
       - uses: actions/checkout@v6.0.0
 
