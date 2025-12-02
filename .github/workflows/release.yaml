@@ -1,0 +1,38 @@
+# .github/workflows/release.yaml
+name: Release
+on:
+  workflow_run:
+    branches: [ main ]
+    workflows: [ Build ]
+    types: [ completed ]
+
+jobs:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6.0.0
+
+      - name: Download artifact from Build workflow
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: build-artifact
+          path: ./artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Use artifact
+        id: version
+        run: |
+          cat ./artifact/build.txt >> $GITHUB_OUTPUT
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2.5.0
+        with:
+          name: Test release
+          tag_name: release-${{ steps.outputs.version.build_version }}
+          body: |
+            This is a test release created from the Deploy workflow.
+          files: ./artifact/build.txt
