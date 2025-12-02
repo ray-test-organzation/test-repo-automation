@@ -1,0 +1,21 @@
+# .github/workflows/build.yml
+name: Build
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.0
+
+      - name: Build
+        run: echo "build output 2" > build.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: build-artifact
+          path: build.txt
+

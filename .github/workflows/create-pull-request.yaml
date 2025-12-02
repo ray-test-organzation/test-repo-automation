@@ -38,7 +38,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: test-stable-branch-1
-          fetch-depth: 0
           repository: ray-test-organzation/${{ env.TARGET_REPO_PATH }}  # not the automation repo
       - name: Download changes to current repository
         uses: actions/download-artifact@v4
