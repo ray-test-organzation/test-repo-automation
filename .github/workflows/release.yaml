@@ -39,13 +39,7 @@ jobs:
         uses: actions/download-artifact@v6.0.0
         with:
           pattern: build-{{ steps.read_version.outputs.build_version }}-*
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ steps.get_latest_run.outputs.id }}
-
-      - name: Use artifact
-        id: version
-        run: |
-          cat ./artifact/build.txt >> $GITHUB_OUTPUT
 
       - name: Create release
         uses: softprops/action-gh-release@v2.5.0
