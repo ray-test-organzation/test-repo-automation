@@ -15,5 +15,10 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: build-artifact
+          name: build-0.4.1-x86_64-linux
           path: build.txt
+
+      - name: Download artifact from Build workflow
+        uses: actions/download-artifact@v6.0.0
+        with:
+          pattern: "build-0.4.1-*"
