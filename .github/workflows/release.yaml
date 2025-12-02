@@ -19,9 +19,9 @@ jobs:
         id: get-plan
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: ${{ inputs.working-directory }}
+          working-directory: "."
           workflow-file: ".github/workflows/build.yaml"
-          workflow-run-id: ${{ inputs.workflow-run-id }}
+          workflow-run-id: ""
           identifier: ""
 
       - uses: actions/checkout@v6.0.0
