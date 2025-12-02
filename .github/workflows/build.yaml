@@ -3,15 +3,14 @@ name: Build
 on:
   pull_request:
     branches: [ main ]
+    paths:
+      - "build.txt"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.0
-
-      - name: Build
-        run: echo "build output 4" > build.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@v5.0.0

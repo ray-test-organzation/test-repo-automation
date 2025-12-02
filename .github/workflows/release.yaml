@@ -1,9 +1,10 @@
 # .github/workflows/deploy.yml
 name: Deploy
 on:
-  workflow_run:
-    workflows: [ Build ]
-    types: [ completed ]
+  push:
+    branches: [ main ]
+    paths:
+      - "build.txt"
 
 jobs:
   deploy:
