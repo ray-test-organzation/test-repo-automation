@@ -1,17 +1,25 @@
 # .github/workflows/release.yaml
 name: Release
 on:
-  workflow_run:
-    workflows: [ Build ]
-    types: [ completed ]
+  push:
+    branches: [ main ]
+    paths:
+      - "build.txt"
 
 jobs:
   release:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      build_version: ${{ steps.version.build_version }}
     steps:
+      - name: Get plan
+        uses: canonical/operator-workflows/internal/get-plan@main
+        id: get-plan
+        with:
+          workflow-file: ".github/workflows/build.yaml"
+
       - uses: actions/checkout@v6.0.0
 
       - name: Debug
