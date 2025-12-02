@@ -28,14 +28,5 @@ jobs:
               workflow_id: context.workflow,
               per_page: 1
             });
-            # core.setOutput('latest-run-id', runs.workflow_runs[0].id);
-
-            const {SHA} = process.env
-            const commit = await github.rest.repos.getCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `${SHA}`
-            })
             console.log(runs.workflow_runs[0]);
-            console.log(commit);
 
