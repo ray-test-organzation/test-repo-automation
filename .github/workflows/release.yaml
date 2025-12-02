@@ -10,6 +10,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       contents: write
     outputs:
       build_version: ${{ steps.version.build_version }}
@@ -19,7 +20,7 @@ jobs:
         id: get-plan
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: "."
+          working-directory: "./"
           workflow-file: ".github/workflows/build.yaml"
           workflow-run-id: ""
           identifier: ""
