@@ -15,5 +15,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: build-artifact
+          name: __build_artifact__plan
           path: build.txt
