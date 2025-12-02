@@ -1,6 +1,10 @@
 # .github/workflows/build.yml
-name: Build
+name: Build and Release
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - "build.txt"
   pull_request:
     branches: [ main ]
     paths:
@@ -8,6 +12,7 @@ on:
 
 jobs:
   build:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.0
@@ -18,3 +23,31 @@ jobs:
           name: build-artifact
           path: build.txt
 
+  release:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6.0.0
+
+      - name: Download artifact from Build workflow
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: build-artifact
+          path: ./artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use artifact
+        id: version
+        run: |
+          cat ./artifact/build.txt >> $GITHUB_OUTPUT
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2.5.0
+        with:
+          name: Test release
+          tag_name: release-${{ steps.outputs.version.build_version }}
+          body: |
+            This is a test release created from the Deploy workflow.
+          files: ./artifact/build.txt
